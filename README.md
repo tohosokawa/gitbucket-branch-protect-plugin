@@ -1,4 +1,4 @@
-gitbucket-branch-protect-plugin
+gitbucket-branch-protect-plugin [![Build Status](https://travis-ci.org/tohosokawa/gitbucket-branch-protect-plugin.svg?branch=master)](https://travis-ci.org/tohosokawa/gitbucket-branch-protect-plugin)
 ========
 
 Usually, the branch protect function save the following.
