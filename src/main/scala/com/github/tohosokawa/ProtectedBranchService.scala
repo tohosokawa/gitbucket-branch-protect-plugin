@@ -47,12 +47,8 @@ trait ProtectedBranchService {
 object ProtectedBranchService {
 
   class ProtectedBranchReceiveHook extends ReceiveHook with ProtectedBranchService with RepositoryService with AccountService {
-    println("create ProtectedBranchReceiveHook")
-
     override def preReceive(owner: String, repository: String, receivePack: ReceivePack, command: ReceiveCommand, pusher: String)
                            (implicit session: Session): Option[String] = {
-      println("preReceive")
-
       val branch = command.getRefName.stripPrefix("refs/heads/")
       if(branch != command.getRefName){
         val repositoryInfo = getRepository(owner, repository)
@@ -95,13 +91,9 @@ object ProtectedBranchService {
       * Can't have changes merged into them until required status checks pass
       */
     def getStopReason(isAllowNonFastForwards: Boolean, command: ReceiveCommand, pusher: String)(implicit session: Session): Option[String] = {
-      println("getStopReason")
-      println("command type: ", command.getType)
-      println("isAllowNonFastForwards: ", isAllowNonFastForwards)
-      println("isAdministrator(pusher): ", isAdministrator(pusher))
       if(enabled){
         command.getType() match {
-          case ReceiveCommand.Type.UPDATE|ReceiveCommand.Type.UPDATE_NONFASTFORWARD if (isAllowNonFastForwards && !isAdministrator(pusher)) =>
+          case ReceiveCommand.Type.UPDATE|ReceiveCommand.Type.UPDATE_NONFASTFORWARD if isAllowNonFastForwards && !isAdministrator(pusher) =>
             println("Cannot push to a protected branch")
             Some("Cannot push to a protected branch")
           case ReceiveCommand.Type.UPDATE|ReceiveCommand.Type.UPDATE_NONFASTFORWARD if needStatusCheck(pusher) =>
