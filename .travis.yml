@@ -3,8 +3,18 @@ language: scala
 jdk:
 - oraclejdk8
 script:
-- sbt test
+- sbt package
 addons:
   apt:
     packages:
     - oracle-java8-installer
+deploy:
+  provider: releases
+  api_key:
+    secure: klENJgbvBv5kwbTLZXtlyGIOkM+u+3gRGrWHxj8jkoiKCHIcwZ7BnvRsMrmp0xNB2a+z4T6mlpNxzqZV9RvHQ3nkpvqSrZP92hvLsh/vnuSTDcz+IZI0h7ZYZz54oqQJxIx3Q4dLLr6raosNaNsqftLp0kKLxr56SpgfkTqizJBYzaI5gXJzCWWDxJ1CyRjag0B+XeNA/fVYR/AaL+Ju7gOMpeYbeTQVyHWtXxkWUXTHNLIS2a+a2qhuQMCF2i5jXdBPbkadk4DDANdkWFYNItgpz1EwO9jkP6oe/2ff0aLbPNOux6kCd8WL12BuXg8NGT9AsF0cI5Hh03Lc3fP+6iIfD3cCr34XcHC8o8i8XB+sLL6JRqfyRU5Ua/bCli5BlOamOnHxdhqE/yZ4CgEmIzoWWXBx8GV3oryuCXrWntOHRcH0nTJBo70I3ARFpofvRF5DZUCxNp/2sXdBwCLBNCXOi6n/2O9Gm0VpL/bIWIAFJtu6Yn8eKkll080IvvPjT7w4QivhY1VjnrYXGoZsxO8mDXw8JjYIe0TanSmJz3JsNXywIGted4jDu1t4FF66a6nXP1OpnRjLYFRqYgOaa/W51V6PD31POWmitfzigpWK4iTKvdG0FA/p087lv21z8fbn5ZqOQTabQCK9b+40K9B6Hyry5HfNiXQ+BMOUDjo=
+  file_glob: true
+  file: "$TRAVIS_BUILD_DIR/target/**/*.jar"
+  skip_cleanup: true
+  on:
+    repo: tohosokawa/gitbucket-branch-protect-plugin
+    tags: true
