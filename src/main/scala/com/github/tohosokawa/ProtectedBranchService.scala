@@ -80,7 +80,6 @@ object ProtectedBranchService {
                                     * Enforce required status checks for repository administrators.
                                     */
                                   includeAdministrators: Boolean) extends AccountService with CommitStatusService {
-    println("create   case class ProtectedBranchInfo")
 
     def isAdministrator(pusher: String)(implicit session: Session): Boolean =
       pusher == owner || getGroupMembers(owner).exists(gm => gm.userName == pusher && gm.isManager)
