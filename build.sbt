@@ -2,7 +2,7 @@ name := "gitbucket-branch-protect-plugin"
 
 organization := "com.github.tohosokawa"
 
-version := "1.0.0"
+version := "1.0.1"
 
 scalaVersion := "2.12.2"
 

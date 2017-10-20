@@ -1,6 +1,6 @@
 package com.github.tohosokawa
 
-import gitbucket.core.model.{CommitState, ProtectedBranch, ProtectedBranchContext}
+import gitbucket.core.model.{CommitState, ProtectedBranch, ProtectedBranchContext, Role}
 import gitbucket.core.plugin.ReceiveHook
 import gitbucket.core.model.Profile._
 import gitbucket.core.model.Profile.profile.blockingApi._
@@ -79,11 +79,19 @@ object ProtectedBranchService {
                                     * Include administrators
                                     * Enforce required status checks for repository administrators.
                                     */
-                                  includeAdministrators: Boolean) extends AccountService with CommitStatusService {
-    println("create   case class ProtectedBranchInfo")
+                                  includeAdministrators: Boolean) extends AccountService with CommitStatusService with RepositoryService{
 
     def isAdministrator(pusher: String)(implicit session: Session): Boolean =
-      pusher == owner || getGroupMembers(owner).exists(gm => gm.userName == pusher && gm.isManager)
+      pusher == owner || getGroupMembers(owner).exists(gm => gm.userName == pusher && gm.isManager) ||
+        getCollaborators(owner, repository).exists { case (collaborator, isGroup) =>
+          if(collaborator.role == Role.ADMIN.name){
+            if(isGroup){
+              getGroupMembers(collaborator.collaboratorName).exists(gm => gm.userName == pusher)
+            } else {
+              collaborator.collaboratorName == pusher
+            }
+          } else false
+        }
 
     /**
       * Can't be force pushed
