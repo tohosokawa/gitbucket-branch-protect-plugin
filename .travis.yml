@@ -1,13 +1,9 @@
 sudo: false
 language: scala
 jdk:
-- oraclejdk9
+- openjdk8
 script:
 - sbt package
-addons:
-  apt:
-    packages:
-    - oracle-java9-installer
 deploy:
   provider: releases
   api_key:
