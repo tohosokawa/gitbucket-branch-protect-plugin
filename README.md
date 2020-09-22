@@ -10,6 +10,11 @@ But, I want to protect non-force push from non admin users, too.
 
 ## Install
 
+Plugin version | GitBucket version
+:--------------|:--------------------
+1.1.x          | 4.32.x
+1.0.x          | 4.15.x - 4.31.x
+
 Copy `gitbucket-branch-protect-plugin_xxxx.jar` to `~/.gitbucket/plugins`
 
 Please refer gitbucket plugin [Install and Test](https://gitbucket.github.io/gitbucket-news/gitbucket/2015/06/29/how-to-create-plugin.html#install-and-test).

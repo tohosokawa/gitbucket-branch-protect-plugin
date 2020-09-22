@@ -10,3 +10,8 @@ ports:
 tasks:
   - init: echo 'init script' # runs during prebuild
     command: echo 'start script'
+
+vscode:
+  extensions:
+    - scalameta.metals@1.9.4:PxYRuGll1yFJGq/sSSA2Fg==
+    - scala-lang.scala@0.4.3:4toR7IuVtVqB/cqkVaTgZg==
